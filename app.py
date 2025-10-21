@@ -14,7 +14,7 @@ df_plantes['Temp_min'] = pd.to_numeric(df_plantes['Temp_min'], errors='coerce')
 df_plantes['Temp_max'] = pd.to_numeric(df_plantes['Temp_max'], errors='coerce')
 
 # 1️⃣ Question Luminosité
-luminosite = st.selectbox("Quelle est la luminosité de ta pièce ?", ["Faible", "Moyen", "Fort"])
+luminosite = st.selectbox("Quelle est la luminosité de ta pièce ?", ["Faible", "Moyenne", "Forte"])
 
 # 2️⃣ Question Allergène pour animaux
 allergene = st.radio("Veux-tu éviter les plantes allergènes pour tes animaux ?", ["Oui", "Non"])
@@ -89,3 +89,4 @@ if st.button("Valider"):
             if pd.notna(row["Photo"]) and row["Photo"]:
                 st.image(row["Photo"], width=200)
             st.markdown("---")
+
