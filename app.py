@@ -1,9 +1,26 @@
 
+
 import streamlit as st
 import pandas as pd
 
+st.markdown(
+    """
+    <style>
+        .stApp {
+            background: linear-gradient(to bottom right, #4c8661);
+        }
+
+        h1 {
+            color: #1b4332; /* vert foncé lisible */
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Titre de l'app
-st.title("🌿 Trouve ta plante idéale !")
+st.title("🌿 PlantAdvisor")
+st.write("Tu désires acheter une plante mais tu ne sais pas laquelle correspond le mieux à tes besoins et envies ? Pas de panique, Pladvisor est la pour t'éclairer.")
 
 # Charger le CSV et nettoyer les colonnes
 df_plantes = pd.read_csv("plants.csv", sep=";", encoding="utf-8-sig")
@@ -20,37 +37,63 @@ df_plantes[['Temp_min', 'Temp_max']] = (
 df_plantes['Temp_min'] = pd.to_numeric(df_plantes['Temp_min'], errors='coerce') #conversion en nombre, si erreur NaN
 df_plantes['Temp_max'] = pd.to_numeric(df_plantes['Temp_max'], errors='coerce')
 
-# Question 1 : Luminosité
-luminosite = st.selectbox("Quelle est la luminosité de ta pièce ?", ["Faible", "Moyen", "Fort"])
+#Question 1 : Emplacement
+emplacement = st.radio(
+    "**🏡 Quel type de plante souhaites-tu ?**", 
+    ["Une plante d'exterieur", "Une plante d'interieur"]
+    )
 
-# Question 2 : Allergène
-allergene = st.radio("Veux-tu éviter les plantes allergènes pour tes animaux ?", ["Oui", "Non"])
+# Question 2 : Luminosité
+luminosite = st.selectbox(
+    "☀️ **Quelle sera la luminosité dont ta plante bénéficiera ?** ", 
+    ['Beaucoup de luminosité (soleil direct)', 'Luminosité moyenne (pas de soleil direct)', 'Ombre ou sans sans lumière naturelle']
+    )
+if 'Beaucoup de luminosité (soleil direct)' :
+    luminosite = 'Forte'
+elif 'Luminosité moyenne (pas de soleil direct)' :
+    luminosite = 'Moyen'
+else :
+    luminosite = 'Faible'
 
 # Question 3 : Type de plante
 type_plante = st.selectbox(
-    "Quel type de plante préfères-tu ?",
-    [
-        "Plante grimpante", "Succulente", "Plante d'intérieur", "Fleurie",
-        "Tropicale", "Fougère", "Plante retombante", "Plante aromatique", "Plante aérienne"
-    ]
+    "🪴 **Quel type de plante préfères-tu ?** ",
+    [ "Plante grimpante", "Succulente", "Fleurie", "Tropicale", "Fougère", "Plante retombante", "Plante aromatique", "Plante aérienne"]
 )
 
 # Question 4 : Température moyenne
 temp_piece = st.slider(
-    "En moyenne, à quelle température chauffez-vous votre pièce ?",
-    min_value=10, max_value=35, value=20
+    "🌡️ **En moyenne, à quelle température chauffez-vous votre pièce ?** ",
+    min_value=10, max_value=40, value=20
+)
+
+# Question 5 : Arrosage
+arrosage = st.slider(
+    "**🚿 A quelle fréquence te sens-tu prêt à arroser ta plantepar mois ?**",
+    min_value = 1, max_value = 10, value = 5
+)
+
+# Question 6 : Allergène
+allergene = st.radio(
+    "🐕 **Veux-tu éviter les plantes allergènes pour tes animaux ?** ", 
+    ["Oui", "Non"]
+    )
+
+# Question 7 : Budget
+budget = st.number_input(
+    "💰 **Quel est ton budget max ?** "
 )
 
 # Filtrer les plantes allergènes si l’utilisateur dit “Oui”
 if allergene == "Oui":
     df_plantes = df_plantes[df_plantes["Allergène animaux"] == "Non"]
 
-# Quand l’utilisateur clique sur “Valider”
-if st.button("Valider"):
+# Quand l’utilisateur clique sur "Je découvre ma plante"
+if st.button("Je découvre ma plante"):
 
     def calcul_score(row, poids=None):
         if poids is None:
-            poids = {"luminosite": 1, "allergene": 1, "type": 1, "temperature": 1}
+            poids = { "emplacement" : 1, "luminosite": 1, "allergene": 1, "type": 1, "temperature": 1, "budget" : 1}
         score = 0
         total = sum(poids.values())
 
@@ -80,7 +123,7 @@ if st.button("Valider"):
 
     # Afficher les recommandations
     if df_resultats.empty or df_resultats["Match (%)"].max() < 25: 
-        st.warning("😕 Aucune plante ne correspond vraiment à tes critères. Essaie d'ajuster tes réponses !")
+        st.warning("😕 Malheureusement, aucune plante ne semble correspondre à tes critères. Essaie d'ajuster tes réponses !")
     else:
         st.subheader("🏆 Top plante recommandée")
         top1 = df_resultats.iloc[0]
