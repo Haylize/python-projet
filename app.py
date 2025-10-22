@@ -3,16 +3,21 @@
 import streamlit as st
 import pandas as pd
 
+#Me permet d'injecter du CSS pour modifier l'apparence :
 st.markdown(
     """
     <style>
-        .stApp {
-            background: linear-gradient(to bottom right, #4c8661);
-        }
+    html, body, [class*="css"] {
+        font-size: 17px !important;
+    }
 
-        h1 {
-            color: #1b4332; /* vert foncé lisible */
-        }
+    [data-testid="stAppViewContainer"] {
+        background-image: url("https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?_gl=1*avezir*_ga*MjAxNDQzMTAyLjE3NjEwODUxODU.*_ga_8JE65Q40S6*czE3NjExNDQ0MDgkbzMkZzEkdDE3NjExNDUzMDgkajIxJGwwJGgw");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: brightness(100%);
+}
     </style>
     """,
     unsafe_allow_html=True
@@ -20,7 +25,7 @@ st.markdown(
 
 # Titre de l'app
 st.title("🌿 PlantAdvisor")
-st.write("Tu désires acheter une plante mais tu ne sais pas laquelle correspond le mieux à tes besoins et envies ? Pas de panique, Pladvisor est la pour t'éclairer.")
+st.write("Tu désires acheter une plante mais tu ne sais pas laquelle correspond le mieux à tes besoins et envies ? Pas de panique, PlantAdvisor est la pour t'éclairer.")
 
 # Charger le CSV et nettoyer les colonnes
 df_plantes = pd.read_csv("plants.csv", sep=";", encoding="utf-8-sig")
@@ -37,9 +42,10 @@ df_plantes[['Temp_min', 'Temp_max']] = (
 df_plantes['Temp_min'] = pd.to_numeric(df_plantes['Temp_min'], errors='coerce') #conversion en nombre, si erreur NaN
 df_plantes['Temp_max'] = pd.to_numeric(df_plantes['Temp_max'], errors='coerce')
 
+
 #Question 1 : Emplacement
 emplacement = st.radio(
-    "**🏡 Quel type de plante souhaites-tu ?**", 
+    "**🏡 Où souhaites-tu installer ta plante ?**", 
     ["Une plante d'exterieur", "Une plante d'interieur"]
     )
 
@@ -81,7 +87,7 @@ allergene = st.radio(
 
 # Question 7 : Budget
 budget = st.number_input(
-    "💰 **Quel est ton budget max ?** "
+    "💰 **Quel est ton budget max ?** ",
 )
 
 # Filtrer les plantes allergènes si l’utilisateur dit “Oui”
