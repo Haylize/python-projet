@@ -156,6 +156,7 @@ if st.button("Je découvre ma plante"):
             st.subheader(f"🏆 {top1['Nom']} - Match : {top1['Match (%)']:.0f}%")
             if pd.notna(top1.get("Photo")) and top1["Photo"]:
                 st.image(top1["Photo"], width=300)
+            st.write(top1["Description"])
             st.markdown("---")
 
             # Critères non remplis
