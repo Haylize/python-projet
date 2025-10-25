@@ -156,27 +156,27 @@ if st.button("Je découvre ma plante"):
             st.subheader(f"🏆 {top1['Nom']} - Match : {top1['Match (%)']:.0f}%")
             if pd.notna(top1.get("Photo")) and top1["Photo"]:
                 st.image(top1["Photo"], width=300)
-            st.write(top1["Description"])
+            st.write(f" **Allez, on fait les présentations ? 😉** Voici {top1["Description"]}")
             st.markdown("---")
 
             # Critères non remplis
             details_non_remplis = []
             if str(top1.get("emplacement")).lower() != emplacement.lower():
-                details_non_remplis.append("Emplacement")
+                details_non_remplis.append(f"Emplacement : {top1.get('emplacement')}")
             if str(top1.get("Luminosité")).lower() != luminosite.lower():
-                details_non_remplis.append("Luminosité")
+                details_non_remplis.append(f"Luminosité : {top1.get('Luminosité')}")
             if str(top1.get("Type")) not in type_plante:
-                details_non_remplis.append("Type")
+                details_non_remplis.append(f"Type : {top1.get('Type')}")
             if pd.notna(top1.get("Budget")) and top1["Budget"] > budget:
-                details_non_remplis.append("Budget")
+                details_non_remplis.append(f"Budget : {top1['Budget']} €")
             if pd.notna(top1.get("Arrosage")) and top1["Arrosage"] > arrosage:
-                details_non_remplis.append("Arrosage")
+                details_non_remplis.append(f"Arrosage : {top1['Arrosage']} / 10")
             if pd.notna(top1['Temp_min']) and pd.notna(top1['Temp_max']):
                 if not (top1['Temp_min'] <= temp_piece <= top1['Temp_max']):
-                    details_non_remplis.append("Température")
+                    details_non_remplis.append(f"Température : {top1['Temp_min']}°C - {top1['Temp_max']}°C")
 
             if details_non_remplis:
-                st.markdown("⚠️ Critères non remplis :")
+                st.markdown("**⚠️ Critères non remplis :**")
                 for critere in details_non_remplis:
                     st.markdown(f"- {critere}")
             else:
