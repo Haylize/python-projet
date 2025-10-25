@@ -26,7 +26,7 @@ st.title("🌿 PlantAdvisor")
 st.write("Tu désires acheter une plante mais tu ne sais pas laquelle correspond le mieux à tes besoins et envies ? Pas de panique, PlantAdvisor est là pour t'éclairer.")
 
 # Charger CSV et nettoyer les colonnes
-df_plantes = pd.read_csv("plants.csv", sep=";", encoding="utf-8-sig")
+df_plantes = pd.read_csv("plants_clean.csv", sep=";", encoding="utf-8-sig")
 df_plantes.columns = df_plantes.columns.str.strip() # Supprimer les espaces dans les noms de colonnes
 
 # Séparer et nettoyer la température
@@ -91,7 +91,7 @@ budget = st.number_input(
 
 # Filtrer les plantes allergènes si l’utilisateur dit “Oui”
 if allergene == "Oui":
-    df_plantes = df_plantes[df_plantes["Allergène animaux"].str.lower() == "non"]
+    df_plantes = df_plantes[df_plantes["Allergène animaux"] == "Non"]
 
 # Quand l’utilisateur clique sur "Je découvre ma plante"
 if st.button("Je découvre ma plante"):
@@ -104,7 +104,7 @@ if st.button("Je découvre ma plante"):
         def calcul_score(row, poids=None):
             # Poids des critères pour calculer le score (type = 2 pour plus d'importance)
             if poids is None:
-                poids = {"emplacement": 1, "luminosite": 1, "allergene": 1, "type": 2, "temperature": 1, "budget": 1, "arrosage": 1}
+                poids = {"emplacement": 2, "luminosite": 1, "allergene": 1, "type": 2, "temperature": 1, "budget": 1, "arrosage": 1}
             
             score = 0
             total = sum(poids.values())
