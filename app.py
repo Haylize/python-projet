@@ -38,6 +38,7 @@ df_plantes[['Temp_min', 'Temp_max']] = (
     .str.replace('°C', '', regex=False)# enlève les °C
     .str.replace(' ', '', regex=False)  # enlève les espaces
     .str.split('-', expand=True) # enlève les -
+    
 )
 df_plantes['Temp_min'] = pd.to_numeric(df_plantes['Temp_min'], errors='coerce') #conversion en nombre, si erreur NaN
 df_plantes['Temp_max'] = pd.to_numeric(df_plantes['Temp_max'], errors='coerce')
@@ -54,15 +55,15 @@ luminosite = st.selectbox(
     "☀️ **Quelle sera la luminosité dont ta plante bénéficiera ?** ", 
     ['Beaucoup de luminosité (soleil direct)', 'Luminosité moyenne (pas de soleil direct)', 'Ombre ou sans sans lumière naturelle']
     )
-if 'Beaucoup de luminosité (soleil direct)' :
+if luminosite == 'Beaucoup de luminosité (soleil direct)':
     luminosite = 'Forte'
-elif 'Luminosité moyenne (pas de soleil direct)' :
+elif luminosite == 'Luminosité moyenne (pas de soleil direct)':
     luminosite = 'Moyen'
-else :
+else:
     luminosite = 'Faible'
 
 # Question 3 : Type de plante
-type_plante = st.selectbox(
+type_plante = st.multiselect(
     "🪴 **Quel type de plante préfères-tu ?** ",
     [ "Plante grimpante", "Succulente", "Fleurie", "Tropicale", "Fougère", "Plante retombante", "Plante aromatique", "Plante aérienne"]
 )
@@ -75,7 +76,7 @@ temp_piece = st.slider(
 
 # Question 5 : Arrosage
 arrosage = st.slider(
-    "**🚿 A quelle fréquence te sens-tu prêt à arroser ta plantepar mois ?**",
+    "**🚿 A quelle fréquence te sens-tu prêt à arroser ta plante par mois ?**",
     min_value = 1, max_value = 10, value = 5
 )
 
@@ -96,30 +97,48 @@ if allergene == "Oui":
 
 # Quand l’utilisateur clique sur "Je découvre ma plante"
 if st.button("Je découvre ma plante"):
+    
+    
+# Vérification : au moins un type doit être sélectionné
+    if not type_plante:
+        st.warning("⚠️ Veuillez sélectionner au moins un type de plante.")
+    else:   
 
-    def calcul_score(row, poids=None):
-        if poids is None:
-            poids = { "emplacement" : 1, "luminosite": 1, "allergene": 1, "type": 1, "temperature": 1, "budget" : 1}
-        score = 0
-        total = sum(poids.values())
+        def calcul_score(row, poids=None):
+            if poids is None:
+                poids = { "emplacement" : 1, "luminosite": 1, "allergene": 1, "type": 1, "temperature": 1, "budget" : 1, "arrosage": 1 }
+            score = 0
+            total = sum(poids.values())
 
-        # Luminosité
-        if row.get("Luminosité") == luminosite:
-            score += poids["luminosite"]
+            # Emplacement
+            if row.get("Emplacement") == emplacement:
+                score += poids["emplacement"]
 
-        # Allergène animaux (tout le monde est non allergène ici si allergene == Oui)
-        score += poids["allergene"]
+            # Luminosité
+            if row.get("Luminosité") == luminosite:
+                score += poids["luminosite"]
 
-        # Type
-        if row.get("Type") == type_plante:
-            score += poids["type"]
+            # Allergène animaux (tout le monde est non allergène ici si allergene == Oui)
+            score += poids["allergene"]
 
-        # Température : vérifier si la température de la pièce est dans la plage
-        if pd.notna(row['Temp_min']) and pd.notna(row['Temp_max']): #verifie que la plante a bien des valeurs temp
-            if row['Temp_min'] <= temp_piece <= row['Temp_max']: #condition pour encadrer
-                score += poids["temperature"]
+            # Type
+            if row.get("Type") in type_plante:
+                score += poids["type"]     
+                
+            # Budget — inclut les plantes moins chères que le budget max
+            if pd.notna(row.get("Prix (€)")) and row["Prix (€)"] <= budget:
+                score += poids["budget"]
+                
+            # Arrosage — inclut les plantes demandant moins d’arrosage que souhaité
+            if pd.notna(row.get("Fréquence_arrosage")) and row["Fréquence_arrosage"] <= arrosage:
+                score += poids["arrosage"]
 
-        return (score / total) * 100
+            # Température : vérifier si la température de la pièce est dans la plage
+            if pd.notna(row['Temp_min']) and pd.notna(row['Temp_max']): #verifie que la plante a bien des valeurs temp
+                if row['Temp_min'] <= temp_piece <= row['Temp_max']: #condition pour encadrer
+                    score += poids["temperature"]
+
+            return (score / total) * 100
 
     # Calcul du score pour chaque plante
     df_plantes["Match (%)"] = df_plantes.apply(calcul_score, axis=1)
