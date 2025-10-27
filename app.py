@@ -67,17 +67,19 @@ else:
 # Question 3 : Type de plante
 type_plante = st.multiselect(
     "🪴 **Quel type de plante préfères-tu ?**",
-    ["Plante grimpante", "Succulente", "Fleurie", "Tropicale", "Fougère", "Plante retombante", "Plante aromatique", "Plante aérienne"]
+    ["Plante grimpante", "Succulente", "Fleurie", "Tropicale", "Fougère", "Plante retombante", "Plante aromatique", "Plante aérienne", "Plante d’intérieur"]
 )
 # Question 4 : Température moyenne
 temp_piece = st.slider(
     "🌡️ **En moyenne, à quelle température chauffez-vous votre pièce ?**", 
-    10, 40, 20)
+    0, 35, 20)
 
 # Question 5 : Arrosage
-arrosage = st.slider(
-    "**🚿 A quelle fréquence te sens-tu prêt à arroser ta plante par mois ?**", 
-    1, 10, 5)
+arrosage = st.selectbox(
+    "**🚿 A quelle fréquence te sens-tu prêt à arroser ta plante ?**", 
+    ["Tous les 2 à 3 jours", "Tous les 3 à 6 jours", "Tous les 7 à 12 jours", "Toutes les 2 à 3 semaines", "Toutes les 4 à 6 semaines"
+    ]
+)
 
 # Question 6 : Allergène
 allergene = st.radio(
@@ -86,7 +88,7 @@ allergene = st.radio(
 
 # Question 7 : Budget
 budget = st.number_input(
-    "💰 **Quel est ton budget max ?**",
+    "💰 **Quel est ton budget max ?** (maximum : 40 EUR)",
     )
 
 # Filtrer les plantes allergènes si l’utilisateur dit “Oui”
@@ -104,7 +106,7 @@ if st.button("Je découvre ma plante"):
         def calcul_score(row, poids=None):
             # Poids des critères pour calculer le score (type = 2 pour plus d'importance)
             if poids is None:
-                poids = {"emplacement": 2, "luminosite": 1, "allergene": 1, "type": 2, "temperature": 1, "budget": 1, "arrosage": 1}
+                poids = {"emplacement": 1, "luminosite": 1, "allergene": 1, "type": 1, "temperature": 1, "budget": 1, "arrosage": 1}
             
             score = 0
             total = sum(poids.values())
@@ -135,7 +137,7 @@ if st.button("Je découvre ma plante"):
 
             # Arrosage — inclut les plantes demandant moins d’arrosage que souhaité
 
-            if pd.notna(row.get("Arrosage")) and row["Arrosage"] <= arrosage:
+            if str(row.get("Arrosage")).lower() == arrosage.lower():
                 score += poids["arrosage"]
 
             return (score / total) * 100
@@ -169,8 +171,8 @@ if st.button("Je découvre ma plante"):
                 details_non_remplis.append(f"Type : {top1.get('Type')}")
             if pd.notna(top1.get("Budget")) and top1["Budget"] > budget:
                 details_non_remplis.append(f"Budget : {top1['Budget']} €")
-            if pd.notna(top1.get("Arrosage")) and top1["Arrosage"] > arrosage:
-                details_non_remplis.append(f"Arrosage : {top1['Arrosage']} / 10")
+            if pd.notna(top1.get("Arrosage")) and top1["Arrosage"] != arrosage:
+                details_non_remplis.append(f"Arrosage : {top1['Arrosage']}")
             if pd.notna(top1['Temp_min']) and pd.notna(top1['Temp_max']):
                 if not (top1['Temp_min'] <= temp_piece <= top1['Temp_max']):
                     details_non_remplis.append(f"Température : {top1['Temp_min']}°C - {top1['Temp_max']}°C")
