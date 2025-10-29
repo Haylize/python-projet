@@ -40,6 +40,16 @@ df_plantes[['Temp_min', 'Temp_max']] = (
 df_plantes['Temp_min'] = pd.to_numeric(df_plantes['Temp_min'], errors='coerce')
 df_plantes['Temp_max'] = pd.to_numeric(df_plantes['Temp_max'], errors='coerce')
 
+
+# Arrosage (l'utilisateur accepte aussi les plantes demandant moins d'arrosage)z<z
+freq_map = {
+    "Tous les 2 à 3 jours": 1,
+    "Tous les 3 à 6 jours": 2,
+    "Tous les 7 à 12 jours": 3,
+    "Toutes les 2 à 3 semaines": 4,
+    "Toutes les 4 à 6 semaines": 5
+}
+
 #Question 1 : Plant location
 emplacement = st.radio(
     "**🏡 Où souhaites-tu installer ta plante ?**", 
@@ -109,7 +119,7 @@ if st.button("Je découvre ma plante"):
         def calcul_score(row, poids=None):
             # Criteria weigths
             if poids is None:
-                poids = {"emplacement": 2, "luminosite": 1, "type": 1, "temperature": 1, "budget": 1, "arrosage": 1}
+                poids = {"emplacement": 1, "luminosite": 1, "type": 1, "temperature": 1, "budget": 1, "arrosage": 1}
             
             score = 0
             total = sum(poids.values())
@@ -136,9 +146,13 @@ if st.button("Je découvre ma plante"):
                 score += poids["budget"]
 
             # Watering
+            user_arrosage_val = freq_map.get(arrosage)
+            plante_arrosage_val = freq_map.get(str(row.get("Arrosage")), None)
 
-            if str(row.get("Arrosage")).lower() == arrosage.lower():
-                score += poids["arrosage"]
+            if plante_arrosage_val is not None:
+                # ✅ Si la plante demande aussi souvent OU MOINS souvent que ce que l’utilisateur accepte
+                if plante_arrosage_val >= user_arrosage_val:
+                    score += poids["arrosage"]
 
             return (score / total) * 100
 
@@ -170,7 +184,7 @@ if st.button("Je découvre ma plante"):
                 details_non_remplis.append(f"Type : {top1.get('Type')}")
             if pd.notna(top1.get("Budget")) and top1["Budget"] > budget:
                 details_non_remplis.append(f"Budget : {top1['Budget']} €")
-            if pd.notna(top1.get("Arrosage")) and top1["Arrosage"] != arrosage:
+            if pd.notna(top1.get("Arrosage")) and freq_map.get(top1["Arrosage"]) < freq_map.get(arrosage):
                 details_non_remplis.append(f"Arrosage : {top1['Arrosage']}")
             if pd.notna(top1['Temp_min']) and pd.notna(top1['Temp_max']):
                 if not (top1['Temp_min'] <= temp_piece <= top1['Temp_max']):
