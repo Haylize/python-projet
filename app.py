@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-#Me permet d'injecter du CSS pour modifier l'apparence :
+#Appearance personalization
 st.markdown(
     """
     <style>
@@ -37,18 +37,8 @@ df_plantes[['Temp_min', 'Temp_max']] = (
     .str.replace(' ', '', regex=False)
     .str.split('-', expand=True)
 )
-df_plantes['Temp_min'] = pd.to_numeric(df_plantes['Temp_min'], errors='coerce')
-df_plantes['Temp_max'] = pd.to_numeric(df_plantes['Temp_max'], errors='coerce')
-
-
-# Arrosage (l'utilisateur accepte aussi les plantes demandant moins d'arrosage)z<z
-freq_map = {
-    "Tous les 2 à 3 jours": 1,
-    "Tous les 3 à 6 jours": 2,
-    "Tous les 7 à 12 jours": 3,
-    "Toutes les 2 à 3 semaines": 4,
-    "Toutes les 4 à 6 semaines": 5
-}
+df_plantes['Temp_min'] = pd.to_numeric(df_plantes['Temp_min'])
+df_plantes['Temp_max'] = pd.to_numeric(df_plantes['Temp_max'])
 
 #Question 1 : Plant location
 emplacement = st.radio(
@@ -87,9 +77,17 @@ temp_piece = st.slider(
 # Question 5 : Watering
 arrosage = st.selectbox(
     "**🚿 A quelle fréquence te sens-tu prêt à arroser ta plante ?**", 
-    ["Tous les 2 à 3 jours", "Tous les 3 à 6 jours", "Tous les 7 à 12 jours", "Toutes les 2 à 3 semaines", "Toutes les 4 à 6 semaines"
-    ]
+    ["Tous les 2 à 3 jours", "Tous les 3 à 6 jours", "Tous les 7 à 12 jours", "Toutes les 2 à 3 semaines", "Toutes les 4 à 6 semaines"]
 )
+
+# User also accepts plants needing less watering
+dico_arrosage = {
+    "Tous les 2 à 3 jours": 1,
+    "Tous les 3 à 6 jours": 2,
+    "Tous les 7 à 12 jours": 3,
+    "Toutes les 2 à 3 semaines": 4,
+    "Toutes les 4 à 6 semaines": 5
+}
 
 # Question 6 : Allergen
 allergene = st.radio(
@@ -102,24 +100,26 @@ if allergene == "Oui":
 
 # Question 7 : Budget
 budget = st.number_input(
-    "💰 **Quel est ton budget max ?** (maximum : 40 EUR)",
+    "💰 **Quel est ton budget max ?** (entre 5€-40€)",
     )
 
 # User submits his answers
 if st.button("Je découvre ma plante"):
 
-# Verify that at least 1 type of plant is selected and budget does not exceed 40
+# Verify that at least 1 type of plant is selected and budget fits plant price
     if not type_plante:
         st.warning("⚠️ Veuillez sélectionner au moins un type de plante.")
     elif budget > 40:
-        st.warning("⚠️ Veuillez saisir un montant inférieur ou égal à 40.")
+        st.warning("⚠️ Veuillez saisir un montant inférieur ou égal à 40€.")
+    elif budget < 5:
+        st.warning("⚠️ Veuillez saisir un montant minimum de 5€.")
     else:
 
         # Score calculation
         def calcul_score(row, poids=None):
             # Criteria weigths
             if poids is None:
-                poids = {"emplacement": 1, "luminosite": 1, "type": 1, "temperature": 1, "budget": 1, "arrosage": 1}
+                poids = {"emplacement": 2, "luminosite": 1, "type": 1, "temperature": 1, "budget": 1, "arrosage": 1}
             
             score = 0
             total = sum(poids.values())
@@ -146,11 +146,10 @@ if st.button("Je découvre ma plante"):
                 score += poids["budget"]
 
             # Watering
-            user_arrosage_val = freq_map.get(arrosage)
-            plante_arrosage_val = freq_map.get(str(row.get("Arrosage")), None)
+            user_arrosage_val = dico_arrosage.get(arrosage)
+            plante_arrosage_val = dico_arrosage.get(str(row.get("Arrosage")), None)
 
             if plante_arrosage_val is not None:
-                # ✅ Si la plante demande aussi souvent OU MOINS souvent que ce que l’utilisateur accepte
                 if plante_arrosage_val >= user_arrosage_val:
                     score += poids["arrosage"]
 
@@ -184,7 +183,7 @@ if st.button("Je découvre ma plante"):
                 details_non_remplis.append(f"Type : {top1.get('Type')}")
             if pd.notna(top1.get("Budget")) and top1["Budget"] > budget:
                 details_non_remplis.append(f"Budget : {top1['Budget']} €")
-            if pd.notna(top1.get("Arrosage")) and freq_map.get(top1["Arrosage"]) < freq_map.get(arrosage):
+            if pd.notna(top1.get("Arrosage")) and dico_arrosage.get(top1["Arrosage"]) < dico_arrosage.get(arrosage):
                 details_non_remplis.append(f"Arrosage : {top1['Arrosage']}")
             if pd.notna(top1['Temp_min']) and pd.notna(top1['Temp_max']):
                 if not (top1['Temp_min'] <= temp_piece <= top1['Temp_max']):
@@ -195,4 +194,4 @@ if st.button("Je découvre ma plante"):
                 for critere in details_non_remplis:
                     st.markdown(f"- {critere}")
             else:
-                st.markdown("✅ Tous les critères correspondent parfaitement !")
+                st.markdown("**✅ C'est un match parfait !**")
