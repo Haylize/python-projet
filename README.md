@@ -1,6 +1,6 @@
 L'objectif du projet PlantAdvisor :
 
-PlantAdvisor est une application développée par Élodie et Édouard. Cette application a pour but de proposer à chaque utilisateur, qui prend le temps de répondre aux quelques questions qui lui sont posées, la plante qui corresponderait le plus à ses besoins et à ses contraintes. 
+PlantAdvisor est une application développée par Élise et Édouard. Cette application a pour but de proposer à chaque utilisateur, qui prend le temps de répondre aux quelques questions qui lui sont posées, la plante qui corresponderait le plus à ses besoins et à ses contraintes. 
 
 L'objectif principal de PlantAdvisor est de permettre aux jardiniers 'en herbe' (donc aux personnes qui n'ont pas de connaissance en botanique) souhaitant acheter leurs première plante, de pouvoir découvrir en seulement 2 minutes quelle plante serait la plus à même de grandir et de s'épanouir chez eux. 
 
