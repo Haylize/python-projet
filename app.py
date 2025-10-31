@@ -6,7 +6,7 @@ st.markdown(
     """
     <style>
     html, body, [class*="css"] {
-        font-size: 17px !important;
+        font-size: 18px !important;
     }
 
     [data-testid="stAppViewContainer"] {
@@ -14,7 +14,6 @@ st.markdown(
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        filter: brightness(100%);
     }
     </style>
     """,
