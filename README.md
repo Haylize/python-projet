@@ -66,12 +66,4 @@ La plante avec le score global le plus élevé (en %) est proposée à l’utili
 - Installer les dépendances : ***pip install -r requirements.txt***
 - Lancer l’application Streamlit : ***streamlit run app.py***
 
-PlantAdvisor est une application qui prend la forme d'un petit questionnaire interractif en 7 questions. Certaines sont des questions à choix multiples, d'autres à choix unique (radio button),
-ou encore sous forme de curseur numérique (slider).
-
-Pour déterminer quelle plante correspond le mieux à l'utilisateur, le calcul de score est basé sur 6 critères : emplacement, luminosite, type, temperature, budget, arrosage (il est important de noter que le critère “emplacement” a plus de poids que les autres, car il est souvent déterminant dans la survie de la plante).
-
-La plante qui a le score le plus élevé sera donc proposée avec son score (en %), sa photo, ainsi qu'une courte description humoristique (mais toujours liée aux caractéristiques réelles de la plante).
-
-
-En deux mots, PlantAdvisor transforme un vrai casse-tête en une expérience amusante et rapide.
+-- **En deux mots, PlantAdvisor transforme un vrai casse-tête en une expérience amusante et rapide.** --
