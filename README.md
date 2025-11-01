@@ -1,6 +1,6 @@
 # PlantAdvisor :
 
-## Trouve la plante faite pour toi, en moins de 2 minutes !
+## *Trouve la plante faite pour toi, en moins de 2 minutes !*
 
 
 ## Présentation de l'application :
