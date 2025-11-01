@@ -58,8 +58,8 @@ La plante avec le score global le plus élevé (en %) est proposée à l’utili
 
 **Exemple de résultat :** 
 
-🏆 Aloe Vera (Match : 92%)
-n/“le médecin de poche. Soigne tes coups de soleil, ton égo et ton appart sec comme le Sahara. Attention, il déteste le trop-plein d’eau.”
+🏆 Aloe Vera (Match : 92%)  
+“le médecin de poche. Soigne tes coups de soleil, ton égo et ton appart sec comme le Sahara. Attention, il déteste le trop-plein d’eau.”  
 ⚠️ Critères non remplis : Arrosage (prévoit un peu moins d’eau que prévu)
 
 **Lancer l’application :**
