@@ -39,13 +39,14 @@ Bien évidemment, PlantAdvisor peut également être utilisé par des personnes 
 
 Le score de correspondance est basé sur 6 critères pondérés :
 
-`*Critère -	Poids	- Description*
-Emplacement -	2	- Facteur déterminant pour la survie de la plante
-Luminosité	- 1	- Niveau de lumière adapté
-Type	- 1	- Style de plante souhaité
-Température	- 1	- Tolérance thermique
-Budget	- 1	- Prix compatible
-Arrosage	- 1	- Fréquence d’entretien acceptable`
+| *Critère |	Poids	| Description* |
+|----------|--------|--------------|
+| Emplacement |	2	| Facteur déterminant pour la survie de la plante |
+| Luminosité	| 1	| Niveau de lumière adapté |
+| Type	| 1	| Style de plante souhaité |
+| Température	| 1	| Tolérance thermique |
+| Budget | 1	| Prix compatible |
+| Arrosage	| 1	| Fréquence d’entretien acceptable |
 
 La plante avec le score global le plus élevé (en %) est proposée à l’utilisateur.
 
