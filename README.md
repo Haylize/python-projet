@@ -5,13 +5,13 @@
 
 ## Présentation de l'application :
 
-PlantAdvisor est une application développée par Élise et Édouard.  
+PlantAdvisor est une application développée par **Élise** et **Édouard**.  
 Elle permet à chaque utilisateur, prenant le temps de répondre aux quelques questions qui lui sont posées, de découvrir la plante qui correspond le mieux à ses besoins et contraintes. 
 
 
 ## Nos objectifs :
 
-L'objectif principal de PlantAdvisor est de permettre aux jardiniers 'en herbe' (donc aux personnes qui n'ont pas de connaissance en botanique) souhaitant acheter leur première plante, de pouvoir découvrir en seulement 2 minutes quelle plante serait la plus à même de grandir et de s'épanouir chez eux. 
+L'objectif principal de **PlantAdvisor** est de permettre aux jardiniers 'en herbe' (donc aux personnes qui n'ont pas de connaissance en botanique) souhaitant acheter leur première plante, de pouvoir **découvrir en seulement 2 minutes quelle plante serait la plus à même de grandir et de s'épanouir chez eux**. 
 
 Bien évidemment, PlantAdvisor peut également être utilisé par des personnes qui s'y connaissent déjà bien en botanique, et qui souhaiteraient tout simplement découvrir quelles autres plantes pourraient venir garnir leurs maisons ou leurs jardins.
 
@@ -52,16 +52,16 @@ La plante avec le score global le plus élevé (en %) est proposée à l’utili
 
 ## Technologies utilisées :
 
-- Python
-- Streamlit (interface utilisateur)
-- Pandas (traitement des données)
-- CSV comme base de données de référence
-- CSS pour la personnalisation de l’apparence
+- **Python**
+- **Streamlit** (interface utilisateur)
+- **Pandas** (traitement des données)
+- **CSV** comme base de données de référence
+- **CSS** pour la personnalisation de l’apparence
 
 ## Exemple de résultat :
 
 🏆 Aloe Vera (Match : 92%)  
-“le médecin de poche. Soigne tes coups de soleil, ton égo et ton appart sec comme le Sahara. Attention, il déteste le trop-plein d’eau.”  
+*“le médecin de poche. Soigne tes coups de soleil, ton égo et ton appart sec comme le Sahara. Attention, il déteste le trop-plein d’eau.”*  
 ⚠️ Critères non remplis : Arrosage (prévoit moins d’eau que prévu)
 
 ## Lancer l’application :
