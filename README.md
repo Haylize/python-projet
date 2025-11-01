@@ -66,7 +66,7 @@ La plante avec le score global le plus élevé (en %) est proposée à l’utili
 
 ## Lancer l’application :
 
-- Cloner le projet : ***git clone git clone https://github.com/Haylize/python-projet.git***
+- Cloner le projet : ***git clone https://github.com/Haylize/python-projet.git***
 - Installer les dépendances : ***pip install -r requirements.txt***
 - Lancer l’application Streamlit : ***streamlit run app.py***
 
