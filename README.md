@@ -37,13 +37,13 @@ Les questions portent sur :
 
 Le score de correspondance est basé sur 6 critères pondérés :
 
-Critère -	Poids	- Description
-Emplacement -	2	- Facteur déterminant pour la survie de la plante
-Luminosité	- 1	- Niveau de lumière adapté
-Type	- 1	- Style de plante souhaité
-Température	- 1	- Tolérance thermique
-Budget	- 1	- Prix compatible
-Arrosage	- 1	- Fréquence d’entretien acceptable
+- Critère -	Poids	- Description
+- Emplacement -	2	- Facteur déterminant pour la survie de la plante
+- Luminosité	- 1	- Niveau de lumière adapté
+- Type	- 1	- Style de plante souhaité
+- Température	- 1	- Tolérance thermique
+- Budget	- 1	- Prix compatible
+- Arrosage	- 1	- Fréquence d’entretien acceptable
 
 La plante avec le score global le plus élevé (en %) est proposée à l’utilisateur.
 
@@ -62,9 +62,9 @@ La plante avec le score global le plus élevé (en %) est proposée à l’utili
 
 **Lancer l’application :**
 
-1 - Cloner le projet : ***git clone https://github.com/votre-utilisateur/plantadvisor.git***
-2 - Installer les dépendances : ***pip install -r requirements.txt***
-3 - Lancer l’application Streamlit : ***streamlit run app.py***
+- Cloner le projet : ***git clone https://github.com/votre-utilisateur/plantadvisor.git***
+- Installer les dépendances : ***pip install -r requirements.txt***
+- Lancer l’application Streamlit : ***streamlit run app.py***
 
 PlantAdvisor est une application qui prend la forme d'un petit questionnaire interractif en 7 questions. Certaines sont des questions à choix multiples, d'autres à choix unique (radio button),
 ou encore sous forme de curseur numérique (slider).
