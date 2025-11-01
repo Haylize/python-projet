@@ -1,12 +1,12 @@
-***PlantAdvisor :***
+**PlantAdvisor :**
 
 Trouve la plante faite pour toi, en moins de 2 minutes !
 
-Présentation de l'application :
+**Présentation de l'application :**
 
 PlantAdvisor est une application développée par Élise et Édouard. Cette application a pour but de proposer à chaque utilisateur, qui prend le temps de répondre aux quelques questions qui lui sont posées, la plante qui corresponderait le plus à ses besoins et à ses contraintes. 
 
-Nos objectifs :
+**Nos objectifs :**
 
 L'objectif principal de PlantAdvisor est de permettre aux jardiniers 'en herbe' (donc aux personnes qui n'ont pas de connaissance en botanique) souhaitant acheter leurs première plante, de pouvoir découvrir en seulement 2 minutes quelle plante serait la plus à même de grandir et de s'épanouir chez eux. 
 
@@ -14,7 +14,7 @@ Bien évidemment, PlantAdvisor peut également être utilisé par des personnes 
 
 
 
-Les principales fonctionnalités :
+**Les principales fonctionnalités :**
 
 PlantAdvisor repose sur un questionnaire de 7 questions, combinant différents types d’interactions :
 
@@ -33,7 +33,7 @@ Les questions portent sur :
 - La présence éventuelle d’animaux (plantes non allergènes)
 - Le budget maximal
 
-Méthode de calcul :
+**Méthode de calcul :**
 
 Le score de correspondance est basé sur 6 critères pondérés :
 
@@ -47,24 +47,24 @@ Arrosage	- 1	- Fréquence d’entretien acceptable
 
 La plante avec le score global le plus élevé (en %) est proposée à l’utilisateur.
 
-Technologies utilisées
+**Technologies utilisées :**
 
 - Python
 - Streamlit (interface utilisateur)
 - Pandas (traitement des données)
 - CSV comme base de données de référence
 
-Exemple de résultat : 
+**Exemple de résultat :** 
 
 🏆 Monstera Deliciosa — Match : 92%
 “Grande, élégante et facile à vivre, elle saura transformer ton salon en jungle urbaine.”
 ⚠️ Critères non remplis : Arrosage (prévoit un peu plus d’eau que prévu)
 
-Lancer l’application :
+**Lancer l’application :**
 
-1 - Cloner le projet : git clone https://github.com/votre-utilisateur/plantadvisor.git
-2 - Installer les dépendances : pip install -r requirements.txt
-3 - Lancer l’application Streamlit : streamlit run app.py
+1 - Cloner le projet : ***git clone https://github.com/votre-utilisateur/plantadvisor.git***
+2 - Installer les dépendances : ***pip install -r requirements.txt***
+3 - Lancer l’application Streamlit : ***streamlit run app.py***
 
 PlantAdvisor est une application qui prend la forme d'un petit questionnaire interractif en 7 questions. Certaines sont des questions à choix multiples, d'autres à choix unique (radio button),
 ou encore sous forme de curseur numérique (slider).
